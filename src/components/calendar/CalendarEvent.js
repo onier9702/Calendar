@@ -8,7 +8,9 @@ export const CalendarEvent = ({event}) => {
   return (
     <div>
         <span>{title}</span>
-        <small> - {user.name}</small>
+        {/* {
+          (user.name) && <small> - {user.name}</small> 
+        } */}
     </div>
   )
 }
