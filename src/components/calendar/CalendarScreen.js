@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
@@ -9,9 +10,8 @@ import moment from 'moment';
 import { CalendarEvent } from './CalendarEvent';
 import { Navbar } from '../ui/Navbar';
 import { CalendarModal } from './CalendarModal';
-import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../actions/ui';
-import { clearActiveEvent, eventSetActive } from '../../actions/events';
+import { clearActiveEvent, eventSetActive, eventStartLoaded } from '../../actions/events';
 import { AddNewFab } from '../ui/AddNewFab';
 import { DeletedFab } from '../ui/DeletedFab';
 
@@ -20,8 +20,15 @@ export const CalendarScreen = () => {
   const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'month' );
 
   const {events, activeEvent} = useSelector(state => state.calendar);
-
+  const dispatch = useDispatch();
   const localizer = momentLocalizer(moment);
+
+  useEffect(() => {
+
+    dispatch(eventStartLoaded());
+    
+  }, [dispatch])
+  
 
   // const events = [{
   //   title: "Birthady of Messi",
@@ -46,8 +53,6 @@ export const CalendarScreen = () => {
     };
     return style;
   };
-
-  const dispatch = useDispatch();
 
   const onDoubleClick = (e) => {
 

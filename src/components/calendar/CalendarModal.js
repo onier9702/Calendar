@@ -6,8 +6,9 @@ import Modal from 'react-modal';
 import '../../styles.css';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { uiCloseModal } from '../../actions/ui';
-import { clearActiveEvent, eventAddNew, eventUpdated } from '../../actions/events';
+import { clearActiveEvent, eventUpdated, startEventAddNew, startEventUpdate } from '../../actions/events';
 
 
 const customStyles = {
@@ -36,6 +37,7 @@ export const CalendarModal = () => {
 
     const dispatch = useDispatch();
     const { modalOpen } = useSelector(state => state.ui);
+    const { uid, name } = useSelector(state => state.auth);
     const { activeEvent } = useSelector(state => state.calendar);
 
     const [dateStart, setDateStart ] = useState(now.toDate());
@@ -90,7 +92,6 @@ export const CalendarModal = () => {
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
-        console.log(formValues);
 
         const momentStart = moment(start);
         const momentEnd = moment(end);
@@ -103,12 +104,9 @@ export const CalendarModal = () => {
         };
 
         if ( activeEvent ) {
-            dispatch( eventUpdated(formValues) );
+            dispatch( startEventUpdate(formValues) );
         } else {
-            dispatch( eventAddNew({
-                ...formValues,
-                id: new Date().getTime(),
-            }) );
+            dispatch( startEventAddNew(formValues, uid, name) );
         };        
 
         setIsValid(true);

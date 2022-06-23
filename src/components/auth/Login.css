@@ -50,3 +50,7 @@
     font-weight: 600;
     text-decoration: none;
 }
+
+.login-form-2 .btnSubmit:hover , .login-form-1 .btnSubmit:focus{
+    color: black;
+}
