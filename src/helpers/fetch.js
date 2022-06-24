@@ -1,7 +1,5 @@
 
-// const baseUrl = process.env.REACT_APP_API_URL;
-const baseUrl = 'https://merncalendar9702.herokuapp.com/api';
-
+const baseUrl = process.env.REACT_APP_API_URL;
 
 const fetchNotToken = ( endpoint, data, method = 'GET' ) => {
 
